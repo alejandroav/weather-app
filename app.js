@@ -1,7 +1,22 @@
 const request = require('request');
+const yargs = require('yargs');
+
+const argv = yargs
+	.options({
+		address:{
+			demand: true,
+			alias: 'a',
+			describe: 'Address to fetch weather from.',
+			string: true
+		}
+	})
+	.help()
+	.alias('help', 'h')
+	.argv;
+
 request(
 	{
-		url: 'http://www.mapquestapi.com/geocoding/v1/address?key=ujyWRpOGAA6pGS750Rf1HeKsvOorKuUo&location=plaza%20pablo%20iglesias%20petrer%20spain',
+		url: `http://www.mapquestapi.com/geocoding/v1/address?key=ujyWRpOGAA6pGS750Rf1HeKsvOorKuUo&location=${encodeURIComponent(argv.address)}`,
 		json: true
 	},
 	(err, res, body) => {
