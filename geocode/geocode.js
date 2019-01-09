@@ -8,13 +8,12 @@ var geocodeAddress = (address, callback) => {
 			json: true
 		},
 		(err, res, body) => {
-			if (err) {
-				callback('Communication error.');
-			} else if (body.info.statuscode !== 0) {
-				callback('Error fetching data.');
+				if (err || body.info.statuscode !== 0) {
+				callback('Unable to reach geolocation service.');
 			} else {
 				callback(undefined, {
 					address: body.results[0].locations[0].street,
+					city: body.results[0].locations[0].adminArea5,
 					latitude: body.results[0].locations[0].latLng.lat,
 					longitude: body.results[0].locations[0].latLng.lng
 				});
